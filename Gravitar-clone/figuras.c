@@ -229,7 +229,7 @@ bool figura_dibujar(figura_t* figura, double dx, double dy, double ang, double c
 	figura_t* fig = figura_clonar(figura);
 	if (fig == NULL) return false;
 	figura_rotar(fig, ang);
-	//figura_trasladar(fig, -centro, 0);
+	figura_trasladar(fig, -centro, 0);
 	figura_escalar(fig, escala);
 	figura_trasladar(fig, centro + dx, dy);
 	for (size_t i = 0; i < fig->cant; i++) {
