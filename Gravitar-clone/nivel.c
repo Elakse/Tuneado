@@ -8,6 +8,7 @@
 #include "reactor.h"
 #include <stdbool.h>
 #include "planeta.h"
+#include "estadio.h"
 
 struct nivel {
     lista_t* torretas;
@@ -15,7 +16,10 @@ struct nivel {
     lista_t* balas;
     lista_t* planetas;
     lista_t* reactores;
+    base_t* base;
+    estrella_t* estrella;
     figura_t* figura;
+    estadio_t estadio;
     bool es_asteroide;      //Si se puede o no volar alrededor
     size_t duracion_balas;
     size_t puntaje;         //Puntaje que se obtiene al vencer el nivel
@@ -24,7 +28,7 @@ struct nivel {
 
 //CREACION Y DESTRUCCION
 
-nivel_t* nivel_crear(figura_t *figura, size_t duracion_de_balas, size_t puntaje) {
+nivel_t* nivel_crear(figura_t *figura, estadio_t estadio, size_t duracion_de_balas, size_t puntaje) {
     nivel_t* nivel = malloc(sizeof(nivel_t));
     if (nivel == NULL) return NULL;
     nivel->torretas = lista_crear();
@@ -41,6 +45,9 @@ nivel_t* nivel_crear(figura_t *figura, size_t duracion_de_balas, size_t puntaje)
     nivel->duracion_balas = duracion_de_balas;
     nivel->puntaje = puntaje;
     nivel->es_asteroide = 0;
+    nivel->estadio = estadio;
+    nivel->base = NULL;
+    nivel->estrella = NULL;
 	return nivel;
 }
 
@@ -52,6 +59,8 @@ void nivel_destruir(nivel_t* nivel, figura_t** figura) {
     lista_destruir(nivel->balas, (void(*)(void*))bala_destruir_no_ref);
     lista_destruir(nivel->planetas, (void(*)(void*))planeta_destruir_no_ref);
     lista_destruir(nivel->reactores, (void(*)(void*))reactor_destruir_no_ref);
+    base_destruir(nivel->base);
+    estrella_destruir(nivel->estrella);
     free(nivel);
 }
 
@@ -70,11 +79,12 @@ void nivel_planeta_destruir(nivel_t* nivel, estadio_t estadio) {
 
 //DE USO PROPI
 
-planeta_t* nivel_planeta_por_estadio(nivel_t* nivel, estadio_t estadio) {
-    lista_iter_t* iter_p = lista_iter_crear(nivel->planetas);
+planeta_t* nivel_planeta_por_estadio(nivel_t *nivel_inicio, nivel_t* nivel) {
+    lista_iter_t* iter_p = lista_iter_crear(nivel_inicio->planetas);
+    planeta_t* planeta;
     while (!lista_iter_al_final(iter_p)) {
-        planeta_t* planeta = lista_iter_ver_actual(iter_p);
-        if (planeta_get_estadio(planeta) == estadio) {
+        planeta = lista_iter_ver_actual(iter_p);
+        if (planeta_get_estadio(planeta) == nivel_get_estadio(nivel)) {
             lista_iter_destruir(iter_p);
             return planeta;
         }
@@ -90,14 +100,28 @@ void nivel_set_asteroide(nivel_t* nivel, bool es_asteroide) {
     nivel->es_asteroide = es_asteroide;
 }
 
+bool nivel_agregar_estrella(nivel_t* nivel, double posx, double posy, figura_t* figura) {
+    estrella_t* estrella = estrella_crear(posx, posy, figura);
+    if (estrella == NULL) return NULL;
+    nivel->estrella = estrella;
+    return true;
+}
+
+bool nivel_agregar_base(nivel_t* nivel, double posx, double posy, figura_t* figura) {
+    estrella_t* base = base_crear(posx, posy, figura);
+    if (base == NULL) return NULL;
+    nivel->base = base;
+    return true;
+}
+
 bool nivel_agregar_torreta(nivel_t *nivel, double posx, double posy, double ang, figura_t * fig_base, figura_t* fig_disparando) {
     torreta_t* t = torreta_crear(posx, posy, ang, fig_base, fig_disparando);
     if (t == NULL) return false;
     return lista_insertar_ultimo(nivel->torretas, t);
 }
 
-bool nivel_agregar_combustible(nivel_t *nivel, double posx, double posy, double ang, figura_t * figura) {
-    combustible_t* c = combustible_crear(posx, posy, ang, figura);
+bool nivel_agregar_combustible(nivel_t *nivel, double posx, double posy, double ang, size_t cantidad, figura_t * figura) {
+    combustible_t* c = combustible_crear(posx, posy, ang, cantidad, figura);
     if (c == NULL) return false;
     return lista_insertar_ultimo(nivel->combustibles, c);
 }
@@ -125,6 +149,23 @@ void nivel_randomizar_disparos(void) {
 }
 
 //GETTERS
+
+base_t* nivel_get_base(nivel_t* nivel) {
+    return nivel->base;
+}
+
+estrella_t* nivel_get_estrella(nivel_t *nivel) {
+    return nivel->estrella;
+}
+
+estadio_t nivel_get_estadio(nivel_t* nivel) {
+    return nivel->estadio;
+}
+
+bool nivel_tiene_estrella(nivel_t* nivel) {
+    if (nivel->estrella == NULL) return false;
+    else return true;
+}
 
 bool nivel_es_asteroide(nivel_t* nivel) {
     return nivel->es_asteroide;
@@ -205,14 +246,20 @@ size_t nivel_get_conteo_reactor(nivel_t* nivel) {
 
 //INTERACCIONES Y ACTUALIZACIONES
 
-/*void nivel_nave_salir_planeta(nave_t* nave, double posx, double posy, nivel_t* nivel, estadio_t estadio_entrada) {
-    double angulo = computar_angulo(planeta_get_posx(nave), planeta_get_posy(nave), posx, posy);
-    planeta_t* planeta = nivel_planeta_por_estadio(nivel, nave_get_estadio(nave));
-    nave_setear_pos(nave, planeta_get_posx(planeta) + com_x(DISTANCIA_SALIR_PLANETA, angulo), planeta_get_posy(planeta) + com_y(DISTANCIA_SALIR_PLANETA, angulo));
-    nave_setear_estadio(nave, estadio_entrada);
-    nave_setear_vel(nave, com_x(VELOCIDAD_SALIR_PLANETA, angulo), com_y(VELOCIDAD_SALIR_PLANETA, angulo));
+void nivel_nave_salir_planeta(nave_t* nave, nivel_t* nivel, nivel_t* nivel_entrada) {
+    double planeta_x = planeta_get_posx(nivel_planeta_por_estadio(nivel_entrada, nivel));
+    double planeta_y = planeta_get_posy(nivel_planeta_por_estadio(nivel_entrada, nivel));
+    double base_x = base_get_posx(nivel_get_base(nivel_entrada));
+    double base_y = base_get_posy(nivel_get_base(nivel_entrada));
+    double angulo = computar_angulo(planeta_x, planeta_y, base_x, base_y);
+    planeta_t* planeta = nivel_planeta_por_estadio(nivel_entrada, nivel);
+    double ancho_fig = figura_obtener_ancho(planeta_get_fig(planeta));
+
+    nave_setear_pos(nave, planeta_x + com_x(ancho_fig, angulo), planeta_y + com_y(ancho_fig, angulo));
     nave_setear_ang_nave(nave, angulo);
-}*/
+    nave_setear_vel(nave, com_x(20, angulo), com_y(20, angulo));
+    nave_setear_estadio(nave, nivel_get_estadio(nivel_entrada));
+}
 
 bool nivel_nave_accede_planetas(nivel_t* nivel, nave_t* nave) {
     lista_iter_t* iter = lista_iter_crear(nivel->planetas);
@@ -440,6 +487,10 @@ void nivel_dibujar(nivel_t* nivel, double centro, double escala, double ventana_
         lista_iter_avanzar(iter_r);
     }
 
+    if (nivel->base != NULL && nivel->estrella != NULL) {
+        base_dibujar(nivel->base, traslado, 0, centro, escala, ventana_alto, renderer);
+        estrella_dibujar(nivel->estrella, traslado, 0, centro, escala, ventana_alto, renderer);
+    }
 
     lista_iter_destruir(iter_b);
     lista_iter_destruir(iter_t);

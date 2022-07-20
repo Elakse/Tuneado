@@ -2,19 +2,14 @@
 #define NAVE_H
 
 #include "bala.h"
-#include "figuras.h"
-#include<stdbool.h>
-
-
-enum estadio { INICIO, NIVEL1, NIVEL2, NIVEL3, NIVEL4, NIVEL5 };
-typedef enum estadio estadio_t;
+#include <stdbool.h>
+#include "estadio.h"
 
 typedef struct nave nave_t;
 
 //Pre a todas las funciones: la nave pasada como par�metro debi� haber sido creada.
 //Para el funcionamiento de funciones de dibujado y dstancia, la figura anexada al reactor a la hora de crearlo, no debe ser destruida.
 //Las figuras anexadas se consideran con un centro en 0,0
-
 
 
 //CREACION Y DESTRUCCION
@@ -98,7 +93,6 @@ bala_t* nave_dispara(nave_t* nave, double vel, size_t duracion_disparo, figura_t
 
 //Resta una vida a la nave, la devuelve al estadio INICIO y la mueve a posx posy. Setea su velocidad a 0 y su direccion a PI/2
 void nave_matar(nave_t* nave, double posx, double posy);
-
 
 //DIBUJO
 

@@ -109,12 +109,12 @@ int main() {
 
     // Crea e inicializa los niveles anexandolos a la tabla de busqueda para poder relacionarlos con el estadio de la nave
     nivel_t* niveles[] = {
-        [INICIO] = nivel_crear(NULL, 2000, 0),
-        [NIVEL1] = nivel_crear(nivel_fig[1], 2000, 2000),
-        [NIVEL2] = nivel_crear(nivel_fig[2], 2000, 4000),
-        [NIVEL3] = nivel_crear(nivel_fig[3], 2000, 6000),
-        [NIVEL4] = nivel_crear(nivel_fig[4], 2000, 8000),
-        [NIVEL5] = nivel_crear(nivel_fig[5], 2000, 9000),
+        [INICIO] = nivel_crear(NULL, 0, 2000, 0),
+        [NIVEL1] = nivel_crear(nivel_fig[1], 1, 2000, 2000),
+        [NIVEL2] = nivel_crear(nivel_fig[2], 2, 2000, 4000),
+        [NIVEL3] = nivel_crear(nivel_fig[3], 3, 2000, 6000),
+        [NIVEL4] = nivel_crear(nivel_fig[4], 4, 2000, 8000),
+        [NIVEL5] = nivel_crear(nivel_fig[5], 5, 2000, 9000),
     };
 
     // Chequeamos que se hayan creado los niveles
@@ -129,33 +129,32 @@ int main() {
     */
 
     // INICIO
+    nivel_agregar_base(niveles[INICIO], 388, 218, base_fig);
+    nivel_agregar_estrella(niveles[INICIO], 457, 364, estrella_fig);
     nivel_agregar_planeta(niveles[INICIO], 663, 473, 1000, VENTANA_ALTO / ESCALA_MINIMA - 200, 2000, NIVEL1, figura_buscar_nombre(figuras, "PLANETA1"));
     nivel_agregar_planeta(niveles[INICIO], 671, 145, 1000, VENTANA_ALTO / ESCALA_MINIMA - 200, 4000, NIVEL2, figura_buscar_nombre(figuras, "PLANETA2"));
     nivel_agregar_planeta(niveles[INICIO], 110, 79, 900, VENTANA_ALTO / ESCALA_MINIMA - 200, 6000, NIVEL3, figura_buscar_nombre(figuras, "PLANETA3"));
     nivel_agregar_planeta(niveles[INICIO], 204, 455, 545, 746, 8000, NIVEL4, figura_buscar_nombre(figuras, "PLANETA4"));
     nivel_agregar_planeta(niveles[INICIO], 111, 307, 460, 700, 9000, NIVEL5, figura_buscar_nombre(figuras, "PLANETA5"));
 
-    double x_base = 388; double y_base = 218;
-    double x_est = 457; double y_est = 364;
-
     // NIVEL1
     nivel_agregar_torreta(niveles[NIVEL1], 916, 75, -0.66, torreta_fig, torreta_disparo_fig);
     nivel_agregar_torreta(niveles[NIVEL1], 1425, 159, 0.66, torreta_fig, torreta_disparo_fig);
-    nivel_agregar_combustible(niveles[NIVEL1], 1064, 13, 0, combustible_fig);
-    nivel_agregar_combustible(niveles[NIVEL1], 1685, 113, 0, combustible_fig);
+    nivel_agregar_combustible(niveles[NIVEL1], 1064, 13, 0, 3000, combustible_fig);
+    nivel_agregar_combustible(niveles[NIVEL1], 1685, 113, 0, 3000, combustible_fig);
 
     // NIVEL2
-    nivel_agregar_combustible(niveles[NIVEL2], 482, 94, 0, combustible_fig);
-    nivel_agregar_combustible(niveles[NIVEL2], 1751, 247, 0, combustible_fig);
+    nivel_agregar_combustible(niveles[NIVEL2], 482, 94, 0, 3000, combustible_fig);
+    nivel_agregar_combustible(niveles[NIVEL2], 1751, 247, 0, 3000, combustible_fig);
     nivel_agregar_torreta(niveles[NIVEL2], 423, 195, -0.66, torreta_fig, torreta_disparo_fig);
     nivel_agregar_torreta(niveles[NIVEL2], 806, 215, -0.33, torreta_fig, torreta_disparo_fig);
     nivel_agregar_torreta(niveles[NIVEL2], 1254, 153, 0.66, torreta_fig, torreta_disparo_fig);
     nivel_agregar_torreta(niveles[NIVEL2], 1587, 223, 2.23, torreta_fig, torreta_disparo_fig);
 
     // NIVEL3
-    nivel_agregar_combustible(niveles[NIVEL3], 820, 46, 0, combustible_fig);
-    nivel_agregar_combustible(niveles[NIVEL3], 1196, 68, 0, combustible_fig);
-    nivel_agregar_combustible(niveles[NIVEL3], 1602, 46, 0, combustible_fig);
+    nivel_agregar_combustible(niveles[NIVEL3], 820, 46, 0, 3000, combustible_fig);
+    nivel_agregar_combustible(niveles[NIVEL3], 1196, 68, 0, 3000, combustible_fig);
+    nivel_agregar_combustible(niveles[NIVEL3], 1602, 46, 0, 3000, combustible_fig);
     nivel_agregar_torreta(niveles[NIVEL3], 70, 46, 0, torreta_fig, torreta_disparo_fig);
     nivel_agregar_torreta(niveles[NIVEL3], 506, 12, 0, torreta_fig, torreta_disparo_fig);
     nivel_agregar_torreta(niveles[NIVEL3], 952, 12, 0, torreta_fig, torreta_disparo_fig);
@@ -165,10 +164,10 @@ int main() {
 
     // NIVEL4
     nivel_set_asteroide(niveles[NIVEL4], true);
-    nivel_agregar_combustible(niveles[NIVEL4], 188, 429, 0, combustible_fig);
-    nivel_agregar_combustible(niveles[NIVEL4], 667, 600, 0, combustible_fig);
-    nivel_agregar_combustible(niveles[NIVEL4], 1054, 404, 3.14, combustible_fig);
-    nivel_agregar_combustible(niveles[NIVEL4], 574, 344, 3.14, combustible_fig);
+    nivel_agregar_combustible(niveles[NIVEL4], 188, 429, 0, 3000, combustible_fig);
+    nivel_agregar_combustible(niveles[NIVEL4], 667, 600, 0, 3000, combustible_fig);
+    nivel_agregar_combustible(niveles[NIVEL4], 1054, 404, 3.14, 3000, combustible_fig);
+    nivel_agregar_combustible(niveles[NIVEL4], 574, 344, 3.14, 3000, combustible_fig);
     nivel_agregar_torreta(niveles[NIVEL4], 257, 440, 0.66, torreta_fig, torreta_disparo_fig);
     nivel_agregar_torreta(niveles[NIVEL4], 719, 674, 2.23, torreta_fig, torreta_disparo_fig);
     nivel_agregar_torreta(niveles[NIVEL4], 985, 565, 0, torreta_fig, torreta_disparo_fig);
@@ -184,7 +183,7 @@ int main() {
     // Crea la nave y sus condiciones iniciales
     nave_t* jugador = nave_crear(3, JUEGO_COMBUSTIBLE_INICIAL, 0, INICIO, nave_fig, nave_chorro_fig);
     if (jugador == NULL) return 1;
-    nave_setear_pos(jugador, x_base, y_base);
+    nave_setear_pos(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
     nave_setear_ang_nave(jugador, NAVE_ANGULO_INICIAL);
     nave_setear_ang_g(jugador, 3 * PI / 2);
 
@@ -336,9 +335,9 @@ int main() {
                 nave_setear_velx(jugador, x_vel_nav * -1);
 
             // Gravedad con la estrella
-            nave_setear_ang_g(jugador, computar_angulo(x_nav, y_nav, 457, 364));
-            if (computar_distancia(x_nav, y_nav, 457, 364) < 20) {
-                nave_matar(jugador, x_base, y_base);
+            nave_setear_ang_g(jugador, computar_angulo(x_nav, y_nav, estrella_get_posx(nivel_get_estrella(niveles[INICIO])), estrella_get_posy(nivel_get_estrella(niveles[INICIO]))));
+            if (computar_distancia(x_nav, y_nav, estrella_get_posx(nivel_get_estrella(niveles[INICIO])), estrella_get_posy(nivel_get_estrella(niveles[INICIO]))) < 20) {
+                nave_matar(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
             }
 
             // Chequea si la nave entró a algun planeta
@@ -355,6 +354,12 @@ int main() {
             // Calcula dimensiones del nivel
             double ancho = nivel_get_ancho(nivel_act);
             double alto = nivel_get_alto(nivel_act);
+            if (nivel_tiene_estrella(niveles[nivel_nav])) {
+                nave_setear_ang_g(jugador, computar_angulo(x_nav, y_nav, estrella_get_posx(nivel_get_estrella(niveles[nivel_nav])), estrella_get_posy(nivel_get_estrella(niveles[nivel_nav]))));
+                if (computar_distancia(x_nav, y_nav, estrella_get_posx(nivel_get_estrella(niveles[nivel_nav])), estrella_get_posy(nivel_get_estrella(niveles[nivel_nav]))) < 20) {
+                    nave_matar(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
+                }
+            }
             if (!inf) {
                 // Calcula bordes arbitrarios del nivel segun su altura y ancho FISICOS y no los dibujados
                 double x_min = 0;
@@ -365,9 +370,7 @@ int main() {
 
                 // Verifica si la nave sale del nivel
                 if (y_nav <= 5 || y_nav >= y_max || x_nav <= 5 || x_nav >= x_max) {
-                    nivel_balas_vaciar(nivel_act);
-                    nave_matar(jugador, x_base, y_base); //Mata para devolverla al inicio y recupera la vida
-                    nave_sumar_vida(jugador);
+                    nivel_nave_salir_planeta(jugador, niveles[nivel_nav], niveles[INICIO]);
                     nivel_reactores_reiniciar(nivel_act);
                     if (nivel_vencido(nivel_act, jugador)) nivel_planeta_destruir(niveles[INICIO], nivel_nav);
                     continue;
@@ -387,9 +390,7 @@ int main() {
 
                 // Verifica si la nave escapó del nivel
                 if (y_nav > VENTANA_ALTO / ESCALA_MINIMA) {
-                    nivel_balas_vaciar(nivel_act);
-                    nave_matar(jugador, x_base, y_base); // Mata para devolverla al inicio y recupera la vida
-                    nave_sumar_vida(jugador);
+                    nivel_nave_salir_planeta(jugador, niveles[nivel_nav], niveles[INICIO]);
                     nivel_reactores_reiniciar(nivel_act);
                     if (nivel_vencido(nivel_act, jugador)) nivel_planeta_destruir(niveles[INICIO], nivel_nav);
                     continue;
@@ -446,7 +447,7 @@ int main() {
         // Actualiza los reactores y actua en base a eso
         if (nivel_reactores_actualizar(nivel_act) > 0) {
             nivel_balas_vaciar(nivel_act);
-            nave_matar(jugador, x_base, y_base);
+            nave_matar(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
         }
 
         nivel_reactores_disparados(nivel_act);
@@ -455,14 +456,14 @@ int main() {
         if (nivel_nave_disparada(nivel_act, jugador)) {
             if (!escudo) {
                 nivel_balas_vaciar(nivel_act);
-                nave_matar(jugador, x_base, y_base);
+                nave_matar(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
                 nivel_reactores_reiniciar(nivel_act);
                 if (nivel_vencido(nivel_act, jugador)) nivel_planeta_destruir(niveles[INICIO], nivel_nav);
             }
         }
         if (layout != NULL && nave_distancia_a_figura(jugador, layout) < 5) {
             nivel_balas_vaciar(nivel_act);
-            nave_matar(jugador, x_base, y_base);
+            nave_matar(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
             nivel_reactores_reiniciar(nivel_act);
             if (nivel_vencido(nivel_act, jugador)) nivel_planeta_destruir(niveles[INICIO], nivel_nav);
         }
@@ -484,7 +485,7 @@ int main() {
             if (!chorro_prendido) {
                 dibujar_texto("GAME OVER", VENTANA_ANCHO / 2 - 270, VENTANA_ALTO / 2 - 30, 10, 1, 0, 0, VENTANA_ALTO, renderer);
                 game_over = true;
-                nave_setear_pos(jugador, x_base, y_base);
+                nave_setear_pos(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
                 nave_setear_estadio(jugador, INICIO);
                 nave_setear_vel(jugador, 0, 0);
                 nave_setear_ang_nave(jugador, PI / 2);
@@ -498,7 +499,7 @@ int main() {
                     dibujar_texto("THE CAKE IS A LIE", VENTANA_ANCHO / 2 - 350, VENTANA_ALTO / 2 + 100, 7, 1, 0, 0, VENTANA_ALTO, renderer);
                     cake_dibujar(VENTANA_ANCHO / 2 - 100, VENTANA_ALTO / 2 - 130, 0, 0, 60, VENTANA_ALTO, renderer);
                     game_over = true;
-                    nave_setear_pos(jugador, x_base, y_base);
+                    nave_setear_pos(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
                     nave_setear_estadio(jugador, INICIO);
                     nave_setear_vel(jugador, 0, 0);
                     nave_setear_ang_nave(jugador, PI / 2);
@@ -509,7 +510,7 @@ int main() {
                 if (!chorro_prendido) {
                     dibujar_texto("STAGE COMPLETE", VENTANA_ANCHO / 2 - 320, VENTANA_ALTO / 2 - 30, 8, 0, 1, 0, VENTANA_ALTO, renderer);
                     game_over = true;
-                    nave_setear_pos(jugador, x_base, y_base);
+                    nave_setear_pos(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
                     nave_setear_estadio(jugador, INICIO);
                     nave_setear_vel(jugador, 0, 0);
                     nave_setear_ang_nave(jugador, PI / 2);
@@ -522,11 +523,8 @@ int main() {
 
         // Ejecutamos diferentes rutinas de dibujado con diferentes parámetros según el estadio
         if (nivel_nav == INICIO && !game_over) {
-            figura_dibujar(estrella_fig, x_est, y_est, 0, 0, 1, VENTANA_ALTO, renderer);  //Dibujamos base y estrella
-            figura_dibujar(base_fig, x_base, y_base, 0, 0, 1, VENTANA_ALTO, renderer);
             if (escudo) figura_dibujar(escudo_fig, x_nav, y_nav, ang_nav + PI / 2, 0, 1, VENTANA_ALTO, renderer); //Dibujamos nave y escudo
             nave_dibujar(jugador, 0, 0, 0, 1, VENTANA_ALTO, renderer);
-
         }
 
         //Dibujamos la nave y el escudo (angulado hacia el centro o no) dependiendo del estadio
@@ -535,8 +533,13 @@ int main() {
                 if (nivel_es_asteroide(niveles[nivel_nav])) {
                     double x_min, y_min, x_max, y_max;
                     nivel_get_max_min(niveles[nivel_nav], &x_max, &y_max, &x_min, &y_min);
-                    double ang_escudo = PI * 1.5 + computar_angulo(VENTANA_ANCHO / 2 + x_min, VENTANA_ALTO / 2 + y_min, x_nav, y_nav);
-                    if (escudo) figura_dibujar(escudo2_fig, x_nav * escala - centro * escala, y_nav * escala, ang_escudo, 0, escala, VENTANA_ALTO, renderer);
+                    double ang_escudo;
+                        if (y_nav > VENTANA_ALTO / 2 + y_min) {
+                            ang_escudo = 2 * PI;
+                        }
+                        else ang_escudo = PI;
+                    if (escudo)
+                        figura_dibujar(escudo2_fig, x_nav * escala - centro * escala, y_nav * escala, ang_escudo, 0, escala, VENTANA_ALTO, renderer);
                 }
                 else
                     if (escudo) figura_dibujar(escudo2_fig, x_nav * escala - centro * escala, y_nav * escala, ang_nav + PI / 2, 0, escala, VENTANA_ALTO, renderer);

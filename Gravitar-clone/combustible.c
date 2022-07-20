@@ -3,16 +3,18 @@
 struct combustible {
 	double pos[2];
 	double ang;
+	size_t cantidad;
 	figura_t* fig;
 };
 
-combustible_t* combustible_crear(double posx, double posy, double ang, figura_t* figura) {
+combustible_t* combustible_crear(double posx, double posy, double ang, size_t cantidad, figura_t* figura) {
 	combustible_t* combustible = malloc(sizeof(combustible_t));
 	if (combustible == NULL) return NULL;
 	combustible->pos[0] = posx;
 	combustible->pos[1] = posy;
 	combustible->ang = ang;
 	combustible->fig = figura;
+	combustible->cantidad = cantidad;
 	return combustible;
 }
 
@@ -25,6 +27,10 @@ void combustible_destruir_no_ref(combustible_t* combustible) {
 	combustible_destruir(combustible, NULL);
 }
 
+size_t combustible_get_cantidad(combustible_t* combustible) {
+	return combustible->cantidad;
+}
+
 double combustible_get_posx(combustible_t* combustible) {
 	return combustible->pos[0];
 }
@@ -33,6 +39,10 @@ double combustible_get_posy(combustible_t* combustible) {
 }
 double combustible_get_ang(combustible_t* combustible) {
 	return combustible->ang;
+}
+
+void combustible_set_cantidad(combustible_t* combustible, size_t cantidad) {
+	combustible->cantidad = cantidad;
 }
 
 void combustible_set_pos(combustible_t* combustible, double posx, double posy) {

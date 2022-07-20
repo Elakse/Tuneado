@@ -6,8 +6,6 @@
 #include "config.h"
 #include "fisica.h"
 
-
-
 struct nave{
   double pos[2];     //pos[0] = x,  pos[1] = y
   double vel[2];     //vel[0] = vel en x,  vel[1] = vel en y

@@ -135,11 +135,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bala.c" />
+    <ClCompile Include="base.c" />
     <ClCompile Include="cake.c" />
     <ClCompile Include="caracteres.c" />
     <ClCompile Include="color.c" />
     <ClCompile Include="combustible.c" />
     <ClCompile Include="escritura.c" />
+    <ClCompile Include="estrella.c" />
     <ClCompile Include="figuras.c" />
     <ClCompile Include="fisica.c" />
     <ClCompile Include="lista.c" />
@@ -153,12 +155,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bala.h" />
+    <ClInclude Include="base.h" />
     <ClInclude Include="cake.h" />
     <ClInclude Include="caracteres.h" />
     <ClInclude Include="color.h" />
     <ClInclude Include="combustible.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="escritura.h" />
+    <ClInclude Include="estadio.h" />
+    <ClInclude Include="estrella.h" />
     <ClInclude Include="figuras.h" />
     <ClInclude Include="fisica.h" />
     <ClInclude Include="lista.h" />

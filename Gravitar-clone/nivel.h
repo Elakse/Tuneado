@@ -4,7 +4,10 @@
 #include <stdbool.h>
 #include "nave.h"
 #include "figuras.h"
+#include "base.h"
+#include "estrella.h"
 #include "planeta.h"
+#include "estadio.h"
 
 #define DISTANCIA_COLISION 4
 #define DISTANCIA_RECOLECCION 50
@@ -23,7 +26,7 @@ typedef struct nivel nivel_t;
 
 //Crea un nivel con el layout de la figura dada, cierta duracion de balas para aquellas que se creen en el y un puntaje. Devuelve NULL en caso de fallo
 //Pre: el puntero a figura debe apuntar a una figura creada.
-nivel_t* nivel_crear(figura_t* figura, size_t duracion_de_balas, size_t puntaje);
+nivel_t* nivel_crear(figura_t* figura, estadio_t estadio, size_t duracion_de_balas, size_t puntaje);
 
 //Destruye el nivel y devuelve en figura un puntero a la figura anexada al nivel. Si no se desea obtener ese puntero, pues ya cuenta con una referencia a esta figura, colocar NULL.
 void nivel_destruir(nivel_t* nivel, figura_t** figura);
@@ -41,8 +44,10 @@ void nivel_set_asteroide(nivel_t* nivel, bool es_asteroide);
 
 //Las funciones de agreagdo agregan los objetos indicados con las caracteristicas pasadas como parametros
 
+bool nivel_agregar_estrella(nivel_t* nivel, double posx, double posy, figura_t* figura);
+bool nivel_agregar_base(nivel_t* nivel, double posx, double posy, figura_t* figura);
 bool nivel_agregar_torreta(nivel_t* nivel, double posx, double posy, double ang, figura_t* fig_base, figura_t* fig_disparando);
-bool nivel_agregar_combustible(nivel_t* nivel, double posx, double posy, double ang, figura_t* figura);
+bool nivel_agregar_combustible(nivel_t* nivel, double posx, double posy, double ang, size_t cantidad, figura_t* figura);
 bool nivel_agregar_bala(nivel_t* nivel, double posx, double posy, double vel, double ang, bool jugador, figura_t* fig_bala);
 bool nivel_agregar_planeta(nivel_t* nivel, double posx, double posy, double posx_tp, double posy_tp, size_t puntaje, estadio_t estad, figura_t* fig_planeta);
 bool nivel_agregar_reactor(nivel_t* nivel, double posx, double posy, double ang, size_t tiempo, figura_t* fig_react);
@@ -51,7 +56,11 @@ bool nivel_agregar_reactor(nivel_t* nivel, double posx, double posy, double ang,
 
 //GETTERS (Se ahorran explicaciones a lo que hacen las funciones, ya que est� explicitado en sus nombres)
 
+base_t* nivel_get_base(nivel_t* nivel);
+estrella_t* nivel_get_estrella(nivel_t* nivel);
+estadio_t nivel_get_estadio(nivel_t* nivel);
 bool nivel_es_asteroide(nivel_t* nivel);
+bool nivel_tiene_estrella(nivel_t *nivel);
 bool nivel_es_inf(nivel_t * nivel);
 double nivel_get_ancho(nivel_t* nivel);
 double nivel_get_alto(nivel_t* nivel);
@@ -78,6 +87,10 @@ bool nivel_vencido(nivel_t* nivel, nave_t* nave);
 
 
 //ACTUALIZACIONES e INTERACCIONES
+
+//Devuelve un puntero al planeta correspondiente al estadio asociado a un nivel
+//El estadio es un enumerador que marca el nivel en el que se encuentra la nave
+planeta_t *nivel_planeta_por_estadio(nivel_t* nivel_inicio, nivel_t* nivel);
 
 //Crea una bala dentro del nivel como si hubiera sido disparada por la nave (en la direccion en la que mira y con su momento) a una velocidad <vel> y a dibujarse con la figura <fig_bala>
 //Devuelve false encaso de fallo.
@@ -125,7 +138,8 @@ size_t nivel_reactores_disparados(nivel_t* nivel);
 //Reinicia todos los reactores a su tiempo original.
 void nivel_reactores_reiniciar(nivel_t* nivel);
 
-
+//Hace que la nave salga del nivel en el que se encuentra
+void nivel_nave_salir_planeta(nave_t* nave, nivel_t* nivel, nivel_t *nivel_entrada);
 
 //DIBUJO
 

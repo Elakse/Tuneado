@@ -71,7 +71,8 @@ bala_t* torreta_dispara(torreta_t* torreta, double ang, double rango, size_t cha
 	double ang_final = ang + rango / factor;          //Al ang dado le suma el rango didivido por un factor aleatorio
 	double torreta_alto = figura_obtener_alto(torreta->torreta_fig);
 	if (rand() % 1000 < chances) {    
-		bala_t* bala = bala_crear(torreta->pos[0] + com_x(torreta_alto, PI/2 + torreta->ang), torreta->pos[1] + com_y(torreta_alto, PI/2 + torreta->ang), vel, ang_final, duracion_disparo, false, bala_fig);
+		bala_t* bala = bala_crear(torreta->pos[0] + com_x(torreta_alto, PI/2 + torreta->ang),
+								  torreta->pos[1] + com_y(torreta_alto, PI/2 + torreta->ang), vel, ang_final, duracion_disparo, false, bala_fig);
 		torreta->disparando = true;   //Crea una bala si se dan las chances en la punta de la torreta
 		return bala;
 	}

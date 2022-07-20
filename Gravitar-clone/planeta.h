@@ -3,6 +3,7 @@
 
 #include "nave.h"
 #include "figuras.h"
+#include "estadio.h"
 
 typedef struct planeta planeta_t;
 
