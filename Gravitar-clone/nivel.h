@@ -10,6 +10,7 @@
 #include "estadio.h"
 
 #define DISTANCIA_COLISION 4
+#define DISTANCIA_ESTRELLA 20
 #define DISTANCIA_RECOLECCION 50
 
 typedef struct nivel nivel_t;
@@ -140,6 +141,10 @@ void nivel_reactores_reiniciar(nivel_t* nivel);
 
 //Hace que la nave salga del nivel en el que se encuentra
 void nivel_nave_salir_planeta(nave_t* nave, nivel_t* nivel, nivel_t *nivel_entrada);
+
+//Hace que la nave sea atraida por la estrella del nivel, devuelve true si la distancia entre ambos es menor a DISTANCIA_ESTREALLA
+//Pre: el nivel tiene que tener una estrella
+bool nivel_estrella_atrae_nave(nivel_t* nivel, nave_t* nave);
 
 //DIBUJO
 

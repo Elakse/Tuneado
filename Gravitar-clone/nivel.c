@@ -241,10 +241,21 @@ size_t nivel_get_conteo_reactor(nivel_t* nivel) {
         }
         lista_iter_avanzar(iter);
     }
+    lista_iter_destruir(iter);
     return contador;
 }
 
 //INTERACCIONES Y ACTUALIZACIONES
+
+bool nivel_estrella_atrae_nave(nivel_t* nivel, nave_t* nave) {
+    double est_x = estrella_get_posx(nivel->estrella);
+    double est_y = estrella_get_posy(nivel->estrella);
+    double nav_x = nave_get_posx(nave);
+    double nav_y = nave_get_posy(nave);
+    nave_setear_ang_g(nave, computar_angulo(nav_x, nav_y, est_x, est_y));
+    if (computar_distancia(nav_x, nav_y, est_x, est_y) < DISTANCIA_ESTRELLA) return true;
+    return false;
+}
 
 void nivel_nave_salir_planeta(nave_t* nave, nivel_t* nivel, nivel_t* nivel_entrada) {
     double planeta_x = planeta_get_posx(nivel_planeta_por_estadio(nivel_entrada, nivel));
@@ -268,6 +279,7 @@ bool nivel_nave_accede_planetas(nivel_t* nivel, nave_t* nave) {
         if (planeta_distancia_a_punto(p, nave_get_posx(nave), nave_get_posy(nave)) < DISTANCIA_COLISION) {
             nave_setear_estadio(nave, planeta_get_estadio(p));
             nave_setear_pos(nave, planeta_get_posx_tp(p), planeta_get_posy_tp(p));   //Chequea colision y cambia los parametros de la nave en caso de que si
+            lista_iter_destruir(iter);
             return true;
             break;
         }
