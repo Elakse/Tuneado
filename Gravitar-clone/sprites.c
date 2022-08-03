@@ -1,6 +1,6 @@
-#include "cake.h"
+#include "sprites.h"
 
-void cake_dibujar(double posx, double posy, double ang, double centro, double escala, double ventana_alto, SDL_Renderer* renderer) {
+figura_t* figura_cake() {
 
     // Crear figura
     figura_t* cake = figura_crear(false, SPRITE, "CAKE");
@@ -29,9 +29,6 @@ void cake_dibujar(double posx, double posy, double ang, double centro, double es
     figura_agregar_poli(cake, cake5);
     figura_agregar_poli(cake, cake6);
 
-    // Dibujar cake
-    figura_dibujar(cake, posx, posy, ang, centro, escala, ventana_alto, renderer);
-
     // Destruccion
     polilinea_destruir(cake1);
     polilinea_destruir(cake2);
@@ -39,6 +36,27 @@ void cake_dibujar(double posx, double posy, double ang, double centro, double es
     polilinea_destruir(cake4);
     polilinea_destruir(cake5);
     polilinea_destruir(cake6);
-    figura_destruir(cake);
 
+    return cake;
+
+}
+
+//Por si pinta hacer que aparezcan particulas cuando se destruye una torreta
+
+figura_t* fig_particula(bool r, bool g, bool b) {
+    figura_t* particula = figura_crear(false, SPRITE, "PARTICULA");
+
+    // Crear vectores descaradamente hardcodeados
+    const float poli1[5][2] = { {1, 1}, {1, -1}, {-1, -1}, {-1, 1}, {1, 1} };
+    
+    // Crear polilineas a partir de los vectores
+    polilinea_t* part = polilinea_crear(poli1, 9, color_crear(r, g, b));
+
+    // Agregar polis a la figura
+    figura_agregar_poli(particula, part);
+
+    // Destruccion
+    polilinea_destruir(part);
+
+    return particula;
 }

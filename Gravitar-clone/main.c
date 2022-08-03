@@ -9,7 +9,7 @@
 #include "lista.h"
 #include "nivel.h"
 #include "escritura.h"
-#include "cake.h"
+#include "sprites.h"
 
 //FUNCIONES PROPIAS DE "BARBARA", NO SABIAMOS EN QUE TDA COLOCARLAS
 
@@ -105,6 +105,8 @@ int main() {
     figura_t* torreta_disparo_fig = figura_buscar_nombre(figuras, "TORRETA+DISPARO");
     figura_t* reactor_fig = figura_buscar_nombre(figuras, "REACTOR");
     figura_t* combustible_fig = figura_buscar_nombre(figuras, "COMBUSTIBLE");
+
+    figura_t* cake = figura_cake();
 
     bool jugar_de_nuevo = true;
     bool salir = false;
@@ -525,7 +527,7 @@ int main() {
             if (!nivel_tiene_planetas(niveles[INICIO])) {
                 if (vidas_nav >= 6) {
                     dibujar_texto("THE CAKE IS A LIE", VENTANA_ANCHO / 2 - 350, VENTANA_ALTO / 2 + 100, 7, 1, 0, 0, VENTANA_ALTO, renderer);
-                    cake_dibujar(VENTANA_ANCHO / 2 - 100, VENTANA_ALTO / 2 - 130, 0, 0, 60, VENTANA_ALTO, renderer);
+                    figura_dibujar(cake, VENTANA_ANCHO / 2 - 100, VENTANA_ALTO / 2 - 130, 0, 0, 60, VENTANA_ALTO, renderer);
                     game_over = true;
                     nave_setear_pos(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
                     nave_setear_estadio(jugador, INICIO);
@@ -632,6 +634,7 @@ int main() {
         nivel_destruir(niveles[NIVEL5], NULL);
     }
     lista_destruir(figuras, (void(*)(void*))figura_destruir);
+    figura_destruir(cake);
     // END código del alumno
 
     SDL_DestroyRenderer(renderer);
