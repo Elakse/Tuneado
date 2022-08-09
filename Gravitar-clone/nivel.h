@@ -12,6 +12,7 @@
 #define DISTANCIA_COLISION 4
 #define DISTANCIA_ESTRELLA 20
 #define DISTANCIA_RECOLECCION 50
+#define DURACION_ESCOMBRO 2000
 
 typedef struct nivel nivel_t;
 

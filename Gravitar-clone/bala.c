@@ -23,6 +23,7 @@ bala_t* bala_crear(double posx, double posy, double vel, double ang, size_t dura
 	bala->jugador = jugador;
 	return bala;
 }
+
 void bala_destruir(bala_t* bala, figura_t** figura) {
 	if (figura != NULL) *figura = bala->fig;
 	free(bala);
@@ -72,6 +73,6 @@ bool bala_actualizar(bala_t *bala, double dt) {
 
 bool bala_dibujar(bala_t* bala, double tras_x, double tras_y, double centro_escala, double escala, double ventana_alto, SDL_Renderer* renderer) {
 	if (!figura_dibujar(bala->fig, bala->pos[0] * escala + tras_x, bala->pos[1] * escala + tras_y, 0, centro_escala, escala, ventana_alto, renderer))
-		return false;
+		return false; 
 	return true;
 }

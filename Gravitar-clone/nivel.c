@@ -5,6 +5,7 @@
 #include "config.h"
 #include "fisica.h"
 #include "bala.h"
+#include "escombros.h"
 #include "reactor.h"
 #include <stdbool.h>
 #include "planeta.h"
@@ -16,6 +17,7 @@ struct nivel {
     lista_t* balas;
     lista_t* planetas;
     lista_t* reactores;
+    lista_t* escombros;
     base_t* base;
     estrella_t* estrella;
     figura_t* figura;
@@ -41,6 +43,8 @@ nivel_t* nivel_crear(figura_t *figura, estadio_t estadio, size_t duracion_de_bal
     if (nivel->planetas == NULL) return NULL;
     nivel->reactores = lista_crear();
     if (nivel->reactores == NULL) return NULL;
+    nivel->escombros = lista_crear();
+    if (nivel->escombros == NULL) return NULL;
     nivel->figura = figura;
     nivel->duracion_balas = duracion_de_balas;
     nivel->puntaje = puntaje;
@@ -59,6 +63,7 @@ void nivel_destruir(nivel_t* nivel, figura_t** figura) {
     lista_destruir(nivel->balas, (void(*)(void*))bala_destruir_no_ref);
     lista_destruir(nivel->planetas, (void(*)(void*))planeta_destruir_no_ref);
     lista_destruir(nivel->reactores, (void(*)(void*))reactor_destruir_no_ref);
+    lista_destruir(nivel->escombros, (void(*)(void*))reactor_destruir_no_ref);
     base_destruir(nivel->base);
     estrella_destruir(nivel->estrella);
     free(nivel);
@@ -130,6 +135,12 @@ bool nivel_agregar_bala(nivel_t* nivel, double posx, double posy, double vel, do
     bala_t* b = bala_crear(posx, posy, vel, ang, nivel->duracion_balas, jugador, fig_bala);
     if (b == NULL) return false;
     return lista_insertar_ultimo(nivel->balas, b);
+}
+
+bool nivel_agregar_escombro(nivel_t* nivel, double posx, double posy, double vel, double ang, figura_t* fig_escombro) {
+    escombro_t* e = escombro_crear(posx, posy, vel, ang, DURACION_ESCOMBRO, fig_escombro);
+    if (e == NULL) return false;
+    return lista_insertar_ultimo(nivel->escombros, e);
 }
 
 bool nivel_agregar_planeta(nivel_t* nivel, double posx, double posy, double posx_tp, double posy_tp, size_t puntaje, estadio_t estad, figura_t* fig_planeta) {
@@ -360,6 +371,7 @@ size_t nivel_torretas_disparadas(nivel_t* nivel) {
                 torreta_destruida = true;
                 torreta_destruir_no_ref(lista_iter_borrar(iter_t));  //Chequea para cada torreta la colision con cada bala
                 bala_destruir_no_ref(lista_iter_borrar(iter_b));
+                torreta_explota(t);
                 disparadas++; //contador
                 break;
             }

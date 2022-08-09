@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="bala.c" />
     <ClCompile Include="base.c" />
+    <ClCompile Include="escombros.c" />
     <ClCompile Include="sprites.c" />
     <ClCompile Include="caracteres.c" />
     <ClCompile Include="color.c" />
@@ -156,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="bala.h" />
     <ClInclude Include="base.h" />
+    <ClInclude Include="escombros.h" />
     <ClInclude Include="sprites.h" />
     <ClInclude Include="caracteres.h" />
     <ClInclude Include="color.h" />

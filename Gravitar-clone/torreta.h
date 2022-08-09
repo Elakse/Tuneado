@@ -3,6 +3,7 @@
 
 #include "figuras.h"
 #include "bala.h"
+#include "escombros.h"
 
 
 typedef struct torreta torreta_t;
@@ -27,6 +28,7 @@ void torreta_destruir_no_ref(torreta_t* torreta);
 
 //GETTERS (Se ahorran explicaciones a lo que hacen las funciones, ya que est� explicitado en sus nombres)
 
+figura_t* torreta_get_fig(torreta_t* torreta);
 double torreta_get_posx(torreta_t* torreta);
 double torreta_get_posy(torreta_t* torreta);
 double torreta_get_ang(torreta_t* torreta);
