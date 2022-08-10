@@ -68,10 +68,6 @@ void torreta_randomizar_disparos(void) {
 
 //ACCIONES Y DISTANCIAS
 
-escombro_t** torreta_explota(torreta_t* torreta) {
-
-}
-
 bala_t* torreta_dispara(torreta_t* torreta, double ang, double rango, size_t chances, double vel, size_t duracion_disparo, figura_t* bala_fig) {
 	int factor;
 	while ((factor = -100 + rand() % 201) == 0);     

@@ -5,7 +5,6 @@
 #include "bala.h"
 #include "escombros.h"
 
-
 typedef struct torreta torreta_t;
 
 //Pre a todas las funciones: la torreta pasada como par�metro debi� haber sido creada.

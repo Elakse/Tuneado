@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include "figuras.h"
 
+#define DURACION_ESCOMBRO 2000
+
 typedef struct escombro escombro_t;
 
 //CREACION Y DESTRUCCION
@@ -18,6 +20,7 @@ void escombro_destruir(escombro_t* escombro, figura_t** figura);
 //Destruye el reactor sin devolver una referencia a la figura anexada
 void escombro_destruir_no_ref(escombro_t* escombro);
 
+escombro_t** escombro_explosion(double posx, double posy, double vel);
 
 //GETTERS (Se ahorran explicaciones a lo que hacen las funciones, ya que está explicitado en sus nombres)
 

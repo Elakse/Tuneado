@@ -12,7 +12,6 @@
 #define DISTANCIA_COLISION 4
 #define DISTANCIA_ESTRELLA 20
 #define DISTANCIA_RECOLECCION 50
-#define DURACION_ESCOMBRO 2000
 
 typedef struct nivel nivel_t;
 
@@ -121,8 +120,12 @@ size_t nivel_nave_recoge_combustible(nivel_t* nivel, nave_t* nave);
 //Actualiza todas las balas del nivel un cierto <dt>. Moviendolas y eliminandolas si su tiempo se acaba o colisionan con el layout segun DISTANCIA_COLISION
 void nivel_balas_actualizar(nivel_t* nivel, double dt);
 
+void nivel_escombros_actualizar(nivel_t* nivel, double dt);
+
 //Traslada todas las balas un cierto dx y dy
 void nivel_balas_trasladar(nivel_t* nivel, double dx, double dy);
+
+void nivel_escombros_trasladar(nivel_t* nivel, double dx, double dy);
 
 //Elimina todas las balas del nivel
 void nivel_balas_vaciar(nivel_t* nivel);

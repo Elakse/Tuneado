@@ -54,7 +54,6 @@ const struct caracter caracteres[] = {
   {'>', caracter_derecha, sizeof(caracter_derecha) / (sizeof(caracter_a[0]))},
 
   {' ', caracter_espacio, sizeof(caracter_espacio) / (sizeof(caracter_a[0]))},
-
 };
 
 const struct caracter* letra_a_caracter(char letra) {

@@ -371,7 +371,14 @@ size_t nivel_torretas_disparadas(nivel_t* nivel) {
                 torreta_destruida = true;
                 torreta_destruir_no_ref(lista_iter_borrar(iter_t));  //Chequea para cada torreta la colision con cada bala
                 bala_destruir_no_ref(lista_iter_borrar(iter_b));
-                torreta_explota(t);
+                escombro_t** escombros = escombro_explosion(torreta_get_posx(t), torreta_get_posy(t), 10);
+                lista_insertar_ultimo(nivel->escombros, escombros[0]);
+                lista_insertar_ultimo(nivel->escombros, escombros[1]);
+                lista_insertar_ultimo(nivel->escombros, escombros[2]);
+                lista_insertar_ultimo(nivel->escombros, escombros[3]);
+                lista_insertar_ultimo(nivel->escombros, escombros[4]);
+                lista_insertar_ultimo(nivel->escombros, escombros[5]);
+                lista_insertar_ultimo(nivel->escombros, escombros[6]);
                 disparadas++; //contador
                 break;
             }
@@ -401,11 +408,38 @@ void nivel_balas_actualizar(nivel_t* nivel, double dt) {
     lista_iter_destruir(iter);
 }
 
+void nivel_escombros_actualizar(nivel_t* nivel, double dt) {
+    lista_iter_t* iter = lista_iter_crear(nivel->escombros);
+    while (!lista_iter_al_final(iter)) {
+        escombro_t* e = lista_iter_ver_actual(iter);
+        if (!escombro_actualizar(e, dt)) {   //mueve todos los escombros y los elimina si estos murieron
+            escombro_destruir_no_ref(lista_iter_borrar(iter));
+            continue;
+        }
+        if (nivel->figura != NULL && figura_distancia_a_punto(nivel->figura, escombro_get_posx(e), escombro_get_posy(e)) < DISTANCIA_COLISION) {
+            escombro_destruir_no_ref(lista_iter_borrar(iter));  //si el nivel tiene layout, elimina aquellas balasque chocaron
+            continue;
+        }
+        lista_iter_avanzar(iter);
+    }
+    lista_iter_destruir(iter);
+}
+
 void nivel_balas_trasladar(nivel_t* nivel, double dx, double dy) {
     lista_iter_t* iter = lista_iter_crear(nivel->balas);
     while (!lista_iter_al_final(iter)) {
         bala_t* b = lista_iter_ver_actual(iter);
         bala_set_pos(b, bala_get_posx(b) + dx, bala_get_posy(b) + dy);  //cambia la posicion de cada bala
+        lista_iter_avanzar(iter);
+    }
+    lista_iter_destruir(iter);
+}
+
+void nivel_escombros_trasladar(nivel_t* nivel, double dx, double dy) {
+    lista_iter_t* iter = lista_iter_crear(nivel->escombros);
+    while (!lista_iter_al_final(iter)) {
+        escombro_t* e = lista_iter_ver_actual(iter);
+        escombro_set_pos(e, escombro_get_posx(e) + dx, escombro_get_posy(e) + dy);  //cambia la posicion de cada escombro
         lista_iter_avanzar(iter);
     }
     lista_iter_destruir(iter);
@@ -489,6 +523,11 @@ void nivel_dibujar(nivel_t* nivel, double centro, double escala, double ventana_
     while (!lista_iter_al_final(iter_b)) {
         bala_dibujar(lista_iter_ver_actual(iter_b), traslado, 0, centro, escala, ventana_alto, renderer);
         lista_iter_avanzar(iter_b);
+    }
+    lista_iter_t* iter_e = lista_iter_crear(nivel->escombros);
+    while (!lista_iter_al_final(iter_e)) {
+        escombro_dibujar(lista_iter_ver_actual(iter_e), traslado, 0, centro, escala, ventana_alto, renderer);
+        lista_iter_avanzar(iter_e);
     }
     lista_iter_t* iter_t = lista_iter_crear(nivel->torretas);
     while (!lista_iter_al_final(iter_t)) {
