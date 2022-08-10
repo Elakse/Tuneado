@@ -107,6 +107,8 @@ int main() {
     figura_t* combustible_fig = figura_buscar_nombre(figuras, "COMBUSTIBLE");
 
     figura_t* cake = figura_cake();
+    figura_t* particula_torreta = fig_particula(1, 0, 0);
+    figura_t* particula_planeta = fig_particula(1, 1, 1);
 
     bool jugar_de_nuevo = true;
     bool salir = false;
@@ -371,6 +373,7 @@ int main() {
             }
 
             if (nivel_nav != INICIO) {
+                planeta_t* p = nivel_planeta_por_estadio(niveles[INICIO], nivel_act);
                 // Calcula dimensiones del nivel
                 double ancho = nivel_get_ancho(nivel_act);
                 double alto = nivel_get_alto(nivel_act);
@@ -392,7 +395,10 @@ int main() {
                     if (y_nav <= 5 || y_nav >= y_max || x_nav <= 5 || x_nav >= x_max) {
                         nivel_nave_salir_planeta(jugador, niveles[nivel_nav], niveles[INICIO]);
                         nivel_reactores_reiniciar(nivel_act);
-                        if(niv_derrotado) nivel_planeta_destruir(niveles[INICIO], nivel_nav);
+                        if (niv_derrotado) {
+                            nivel_explosion_particulas(niveles[INICIO], planeta_get_posx(p), planeta_get_posy(p), particula_planeta);
+                            nivel_planeta_destruir(niveles[INICIO], nivel_nav);                    
+                        }
                         continue;
                     }
 
@@ -412,7 +418,10 @@ int main() {
                     if (y_nav > VENTANA_ALTO / ESCALA_MINIMA) {
                         nivel_nave_salir_planeta(jugador, niveles[nivel_nav], niveles[INICIO]);
                         nivel_reactores_reiniciar(nivel_act);
-                        if (niv_derrotado) nivel_planeta_destruir(niveles[INICIO], nivel_nav);
+                        if (niv_derrotado) {
+                            nivel_explosion_particulas(niveles[INICIO], planeta_get_posx(p), planeta_get_posy(p), particula_planeta);
+                            nivel_planeta_destruir(niveles[INICIO], nivel_nav);
+                        }
                         continue;
                     }
 
@@ -446,7 +455,9 @@ int main() {
 
 
             // Actualiza las balas y verifica si se tienen que crear nuevas
+            planeta_t* p = nivel_planeta_por_estadio(niveles[INICIO], nivel_act);
             nivel_balas_actualizar(nivel_act, DT);
+            nivel_particulas_actualizar(nivel_act, DT);
 
             if (dispara && disparo_delay == 0) {
                 nivel_nave_dispara(nivel_act, jugador, BALA_VELOCIDAD, disparo_fig);
@@ -456,17 +467,21 @@ int main() {
 
             // Actualiza las torretas
             if (disparo_delay_t == 0) {
-                nivel_torretas_disparan_a_nave(nivel_act, jugador, PI / 8, 80, DISPARO_RANGO, BALA_VELOCIDAD, disparo_fig);
+                nivel_torretas_disparan_a_nave(nivel_act, jugador, PI / 8, 150, DISPARO_RANGO, BALA_VELOCIDAD, disparo_fig);
                 disparo_delay_t = DISPARO_DELAY;
             }
             if (disparo_delay_t != 0) disparo_delay_t--;
 
             // Suma puntos si la nave disparo a alguna torreta
-            nave_sumar_puntos(jugador, puntos_torretas * nivel_torretas_disparadas(nivel_act));
+            nave_sumar_puntos(jugador, puntos_torretas * nivel_torretas_disparadas(nivel_act, particula_torreta));
 
             // Actualiza los reactores y actua en base a eso
             if (nivel_reactores_actualizar(nivel_act) > 0) {
                 nivel_balas_vaciar(nivel_act);
+                if (niv_derrotado) {
+                    nivel_explosion_particulas(niveles[INICIO], planeta_get_posx(p), planeta_get_posy(p), particula_planeta);
+                    nivel_planeta_destruir(niveles[INICIO], nivel_nav);
+                }
                 nave_matar(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
                 continue;
             }
@@ -485,6 +500,10 @@ int main() {
             }
             if (layout != NULL && nave_distancia_a_figura(jugador, layout) < 5) {
                 nivel_balas_vaciar(nivel_act);
+                if (niv_derrotado) {
+                    nivel_explosion_particulas(niveles[INICIO], planeta_get_posx(p), planeta_get_posy(p), particula_planeta);
+                    nivel_planeta_destruir(niveles[INICIO], nivel_nav);
+                }
                 nave_matar(jugador, base_get_posx(nivel_get_base(niveles[INICIO])), base_get_posy(nivel_get_base(niveles[INICIO])));
                 nivel_reactores_reiniciar(nivel_act);
                 if (niv_derrotado) nivel_planeta_destruir(niveles[INICIO], nivel_nav);
@@ -586,6 +605,7 @@ int main() {
 
             if (!game_over) {
                 for (size_t i = 0; i < nave_get_vidas(jugador); i++)
+<<<<<<< Updated upstream
                     figura_dibujar(nave_fig, VENTANA_ANCHO / 2 - 290 + (i * 15), VENTANA_ALTO - 55 + (i * 2), PI / 2, 0, 1, VENTANA_ALTO, renderer);
                 dibujar_texto("SCORE", VENTANA_ANCHO / 2 - 100, VENTANA_ALTO - 30, 2, 0, 1, 1, VENTANA_ALTO, renderer);
                 dibujar_texto("FUEL", VENTANA_ANCHO / 2 - 100, VENTANA_ALTO - 50, 2, 0, 1, 1, VENTANA_ALTO, renderer);
@@ -594,10 +614,20 @@ int main() {
                 dibujar_texto("OR PRESS ESC TO QUIT", VENTANA_ANCHO - 120, 20, 0.8, 1, 1, 1, VENTANA_ALTO, renderer);
                 dibujar_texto("HIGH SCORE", VENTANA_ANCHO / 2 + 240, VENTANA_ALTO - 30, 1.3, nuevo_highscore, !nuevo_highscore, 1, VENTANA_ALTO, renderer);
                 dibujar_texto(itoa_(highscore, high), VENTANA_ANCHO / 2 + 330, VENTANA_ALTO - 30, 1.3, 0, 1, 0, VENTANA_ALTO, renderer);
+=======
+                    figura_dibujar(nave_fig, VENTANA_ANCHO / 2 - 350 + (i * 15), VENTANA_ALTO - 55 + (i * 2), PI / 2, 0, 1, VENTANA_ALTO, renderer);
+                dibujar_texto("SCORE", VENTANA_ANCHO / 2 - 40, VENTANA_ALTO - 30, 2, 0, 1, 1, VENTANA_ALTO, renderer);
+                dibujar_texto("FUEL", VENTANA_ANCHO / 2 - 30, VENTANA_ALTO - 50, 2, 0, 1, 1, VENTANA_ALTO, renderer);
+                dibujar_texto("NEXT SHIP", VENTANA_ANCHO / 2 - 100, VENTANA_ALTO - 70, 2, 0, 1, 1, VENTANA_ALTO, renderer);   
+                dibujar_texto("HIGH SCORE", VENTANA_ANCHO / 2 - 350, VENTANA_ALTO - 85, 1.3, nuevo_highscore, !nuevo_highscore, 1, VENTANA_ALTO, renderer);
+                dibujar_texto(itoa_(highscore, high), VENTANA_ANCHO / 2 - 265, VENTANA_ALTO - 85, 1.3, 0, 1, 0, VENTANA_ALTO, renderer);
+>>>>>>> Stashed changes
                 dibujar_texto(itoa_(puntos_para_nave, siguiente_nave), VENTANA_ANCHO / 2 + 20, VENTANA_ALTO - 70, 2, 0, 1, 0, VENTANA_ALTO, renderer);
                 dibujar_texto(itoa_(fuel_nav, fuel), VENTANA_ANCHO / 2 + 20, VENTANA_ALTO - 50, 2, 0, 1, 0, VENTANA_ALTO, renderer);
                 dibujar_texto(itoa_(puntos_nav, puntos), VENTANA_ANCHO / 2 + 20, VENTANA_ALTO - 30, 2, 0, 1, 0, VENTANA_ALTO, renderer);
             }
+            dibujar_texto("PRESS TAB TO PLAY AGAIN", VENTANA_ANCHO - 120, 35, 0.8, 1, 1, 1, VENTANA_ALTO, renderer);
+            dibujar_texto("OR PRESS ESC TO QUIT", VENTANA_ANCHO - 120, 20, 0.8, 1, 1, 1, VENTANA_ALTO, renderer);
 
             if (nivel_tiene_reactores(nivel_act)) {
                 char conteo_s[10];
@@ -637,6 +667,8 @@ int main() {
     }
     lista_destruir(figuras, (void(*)(void*))figura_destruir);
     figura_destruir(cake);
+    figura_destruir(particula_torreta);
+    figura_destruir(particula_planeta);
     // END código del alumno
 
     SDL_DestroyRenderer(renderer);

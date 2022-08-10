@@ -44,13 +44,13 @@ figura_t* figura_cake() {
 //Por si pinta hacer que aparezcan particulas cuando se destruye una torreta
 
 figura_t* fig_particula(bool r, bool g, bool b) {
-    figura_t* particula = figura_crear(false, SPRITE, "PARTICULA");
+    figura_t* particula = figura_crear(false, SPRITE, "PARTI");
 
     // Crear vectores descaradamente hardcodeados
-    const float poli1[5][2] = { {1, 1}, {1, -1}, {-1, -1}, {-1, 1}, {1, 1} };
+    const float poli1[5][2] = { {0.2, 0.2}, {0.2, -0.2}, {-0.2, -0.2}, {-0.2, 0.2}, {0.2, 0.2} };
     
     // Crear polilineas a partir de los vectores
-    polilinea_t* part = polilinea_crear(poli1, 9, color_crear(r, g, b));
+    polilinea_t* part = polilinea_crear(poli1, 5, color_crear(r, g, b));
 
     // Agregar polis a la figura
     figura_agregar_poli(particula, part);

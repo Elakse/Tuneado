@@ -136,7 +136,11 @@
   <ItemGroup>
     <ClCompile Include="bala.c" />
     <ClCompile Include="base.c" />
+<<<<<<< Updated upstream
     <ClCompile Include="escombros.c" />
+=======
+    <ClCompile Include="particula.c" />
+>>>>>>> Stashed changes
     <ClCompile Include="sprites.c" />
     <ClCompile Include="caracteres.c" />
     <ClCompile Include="color.c" />
@@ -157,7 +161,11 @@
   <ItemGroup>
     <ClInclude Include="bala.h" />
     <ClInclude Include="base.h" />
+<<<<<<< Updated upstream
     <ClInclude Include="escombros.h" />
+=======
+    <ClInclude Include="particula.h" />
+>>>>>>> Stashed changes
     <ClInclude Include="sprites.h" />
     <ClInclude Include="caracteres.h" />
     <ClInclude Include="color.h" />

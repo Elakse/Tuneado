@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include "planeta.h"
 #include "estadio.h"
+#include "particula.h"
 
 struct nivel {
     lista_t* torretas;
@@ -17,7 +18,11 @@ struct nivel {
     lista_t* balas;
     lista_t* planetas;
     lista_t* reactores;
+<<<<<<< Updated upstream
     lista_t* escombros;
+=======
+    lista_t* particulas;
+>>>>>>> Stashed changes
     base_t* base;
     estrella_t* estrella;
     figura_t* figura;
@@ -43,8 +48,13 @@ nivel_t* nivel_crear(figura_t *figura, estadio_t estadio, size_t duracion_de_bal
     if (nivel->planetas == NULL) return NULL;
     nivel->reactores = lista_crear();
     if (nivel->reactores == NULL) return NULL;
+<<<<<<< Updated upstream
     nivel->escombros = lista_crear();
     if (nivel->escombros == NULL) return NULL;
+=======
+    nivel->particulas = lista_crear();
+    if (nivel->particulas == NULL) return NULL;
+>>>>>>> Stashed changes
     nivel->figura = figura;
     nivel->duracion_balas = duracion_de_balas;
     nivel->puntaje = puntaje;
@@ -155,8 +165,20 @@ bool nivel_agregar_reactor(nivel_t* nivel, double posx, double posy, double ang,
     return lista_insertar_ultimo(nivel->reactores, r);
 }
 
+bool nivel_agregar_particula(nivel_t* nivel, double posx, double posy, double vel, double ang, size_t contador, figura_t* fig_parti) {
+    particula_t* pa = particula_crear(posx, posy, vel, ang, contador, fig_parti);
+    if (pa == NULL) return false;
+    return lista_insertar_ultimo(nivel->particulas, pa);
+}
+
 void nivel_randomizar_disparos(void) {
     torreta_randomizar_disparos();
+}
+
+void nivel_explosion_particulas(nivel_t* nivel, double posx, double posy, figura_t* fig) {
+    for (size_t i = 0; i <= 360; i += 30) {
+        nivel_agregar_particula(nivel, posx, posy, rand() % 25 + 5, i, DURACION_PART, fig);
+    }
 }
 
 //GETTERS
@@ -358,7 +380,7 @@ bool nivel_torretas_disparan_a_nave(nivel_t* nivel, nave_t* nave, double abanico
     return true;
 }
 
-size_t nivel_torretas_disparadas(nivel_t* nivel) {
+size_t nivel_torretas_disparadas(nivel_t* nivel, figura_t* fig_destruccion) {
     size_t disparadas = 0; //contador
     lista_iter_t* iter_t = lista_iter_crear(nivel->torretas);
     while (!lista_iter_al_final(iter_t)) { //iteracion de torretas
@@ -369,6 +391,7 @@ size_t nivel_torretas_disparadas(nivel_t* nivel) {
             bala_t* b = lista_iter_ver_actual(iter_b);
             if (bala_es_de_jugador(b) && torreta_distancia_a_punto(t, bala_get_posx(b), bala_get_posy(b)) < DISTANCIA_COLISION) {
                 torreta_destruida = true;
+                nivel_explosion_particulas(nivel, bala_get_posx(b), bala_get_posy(b), fig_destruccion);
                 torreta_destruir_no_ref(lista_iter_borrar(iter_t));  //Chequea para cada torreta la colision con cada bala
                 bala_destruir_no_ref(lista_iter_borrar(iter_b));
                 escombro_t** escombros = escombro_explosion(torreta_get_posx(t), torreta_get_posy(t), 10);
@@ -448,6 +471,23 @@ void nivel_escombros_trasladar(nivel_t* nivel, double dx, double dy) {
 void nivel_balas_vaciar(nivel_t* nivel) {
     lista_destruir(nivel->balas, (void(*)(void*))bala_destruir_no_ref);  //Elmina la lista y vuelve a crearla
     nivel->balas = lista_crear();
+}
+
+void nivel_particulas_actualizar(nivel_t* nivel, double dt) {
+    lista_iter_t* iter = lista_iter_crear(nivel->particulas);
+    while (!lista_iter_al_final(iter)) {
+        particula_t* pa = lista_iter_ver_actual(iter);
+        if (!particula_actualizar(pa, dt)) {   //mueve todas las balas y las elimina si estas murieron
+            particula_destruir_no_ref(lista_iter_borrar(iter));
+            continue;
+        }
+        if (nivel->figura != NULL && figura_distancia_a_punto(nivel->figura, particula_get_posx(pa), particula_get_posy(pa)) < DISTANCIA_COLISION) {
+            particula_destruir_no_ref(lista_iter_borrar(iter));  //si el nivel tiene layout, elimina aquellas balasque chocaron
+            continue;
+        }
+        lista_iter_avanzar(iter);
+    }
+    lista_iter_destruir(iter);
 }
 
 size_t nivel_reactores_actualizar(nivel_t* nivel) {
@@ -549,6 +589,11 @@ void nivel_dibujar(nivel_t* nivel, double centro, double escala, double ventana_
         reactor_dibujar(lista_iter_ver_actual(iter_r), traslado, 0, centro, escala, ventana_alto, renderer);
         lista_iter_avanzar(iter_r);
     }
+    lista_iter_t* iter_pa = lista_iter_crear(nivel->particulas);
+    while (!lista_iter_al_final(iter_pa)) {
+        particula_dibujar(lista_iter_ver_actual(iter_pa), traslado, 0, centro, escala, ventana_alto, renderer);
+        lista_iter_avanzar(iter_pa);
+    }
 
     if (nivel->base != NULL && nivel->estrella != NULL) {
         base_dibujar(nivel->base, traslado, 0, centro, escala, ventana_alto, renderer);
@@ -560,4 +605,5 @@ void nivel_dibujar(nivel_t* nivel, double centro, double escala, double ventana_
     lista_iter_destruir(iter_p);  //elimina los iteradores
     lista_iter_destruir(iter_r);
     lista_iter_destruir(iter_c);
+    lista_iter_destruir(iter_pa);
 }
