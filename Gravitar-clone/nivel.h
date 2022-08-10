@@ -12,7 +12,11 @@
 #define DISTANCIA_COLISION 4
 #define DISTANCIA_ESTRELLA 20
 #define DISTANCIA_RECOLECCION 50
+<<<<<<< Updated upstream
 #define DURACION_ESCOMBRO 2000
+=======
+#define DURACION_PART 300
+>>>>>>> Stashed changes
 
 typedef struct nivel nivel_t;
 
@@ -53,7 +57,8 @@ bool nivel_agregar_combustible(nivel_t* nivel, double posx, double posy, double 
 bool nivel_agregar_bala(nivel_t* nivel, double posx, double posy, double vel, double ang, bool jugador, figura_t* fig_bala);
 bool nivel_agregar_planeta(nivel_t* nivel, double posx, double posy, double posx_tp, double posy_tp, size_t puntaje, estadio_t estad, figura_t* fig_planeta);
 bool nivel_agregar_reactor(nivel_t* nivel, double posx, double posy, double ang, size_t tiempo, figura_t* fig_react);
-
+bool nivel_agregar_particula(nivel_t* nivel, double posx, double posy, double vel, double ang, size_t contador, figura_t* fig_parti);
+void nivel_explosion_particulas(nivel_t* nivel, double posx, double posy, figura_t* fig);
 
 
 //GETTERS (Se ahorran explicaciones a lo que hacen las funciones, ya que est� explicitado en sus nombres)
@@ -112,7 +117,7 @@ void nivel_randomizar_disparos(void);
 bool nivel_torretas_disparan_a_nave(nivel_t* nivel, nave_t* nave, double abanico, size_t chances, double rango, double vel, figura_t* fig_bala);
 
 //Devuelve la cantidad de torretas colisionadas por balas seg�n DISTANCIA_COLISION. Tanto la bala como la torreta que colisionan son eliminadas del nivel.
-size_t nivel_torretas_disparadas(nivel_t* nivel);
+size_t nivel_torretas_disparadas(nivel_t* nivel, figura_t* fig_destruccion);
 
 //Devuelve la cantidad de combustibles recogidos por balas seg�n DISTANCIA_RECOLECCION. El combustible es eliminado del nivel.
 //Pre: la nave debi� haber sido creada.
@@ -146,6 +151,9 @@ void nivel_nave_salir_planeta(nave_t* nave, nivel_t* nivel, nivel_t *nivel_entra
 //Hace que la nave sea atraida por la estrella del nivel, devuelve true si la distancia entre ambos es menor a DISTANCIA_ESTREALLA
 //Pre: el nivel tiene que tener una estrella
 bool nivel_estrella_atrae_nave(nivel_t* nivel, nave_t* nave);
+
+//Actualiza las particulas
+void nivel_particulas_actualizar(nivel_t* nivel, double dt);
 
 //DIBUJO
 
