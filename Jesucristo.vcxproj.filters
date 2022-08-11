@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="figuras.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="color.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="combustible.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="escritura.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="caracteres.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nivel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="particula.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sprites.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="torreta.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bala.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="reactor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="planeta.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="polilinea.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nave.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fisica.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lista.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="estrella.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="combustible.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bala.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nivel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="particula.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sprites.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="torreta.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="polilinea.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="reactor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="planeta.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="figuras.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fisica.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lista.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="escritura.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="estadio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="estrella.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="caracteres.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="figuras.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>
