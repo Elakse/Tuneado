@@ -606,17 +606,13 @@ int main() {
             if (!game_over) {
                 for (size_t i = 0; i < nave_get_vidas(jugador); i++)
                     figura_dibujar(nave_fig, VENTANA_ANCHO / 2 - 290 + (i * 15), VENTANA_ALTO - 55 + (i * 2), PI / 2, 0, 1, VENTANA_ALTO, renderer);
-                dibujar_texto("SCORE", VENTANA_ANCHO / 2 - 100, VENTANA_ALTO - 30, 2, 0, 1, 1, VENTANA_ALTO, renderer);
-                dibujar_texto("FUEL", VENTANA_ANCHO / 2 - 100, VENTANA_ALTO - 50, 2, 0, 1, 1, VENTANA_ALTO, renderer);
-                dibujar_texto("NEXT SHIP", VENTANA_ANCHO / 2 - 100, VENTANA_ALTO - 70, 2, 0, 1, 1, VENTANA_ALTO, renderer);
                 dibujar_texto("PRESS TAB TO PLAY AGAIN", VENTANA_ANCHO - 120, 35, 0.8, 1, 1, 1, VENTANA_ALTO, renderer);
                 dibujar_texto("OR PRESS ESC TO QUIT", VENTANA_ANCHO - 120, 20, 0.8, 1, 1, 1, VENTANA_ALTO, renderer);
                 dibujar_texto("HIGH SCORE", VENTANA_ANCHO / 2 + 240, VENTANA_ALTO - 30, 1.3, nuevo_highscore, !nuevo_highscore, 1, VENTANA_ALTO, renderer);
                 dibujar_texto(itoa_(highscore, high), VENTANA_ANCHO / 2 + 330, VENTANA_ALTO - 30, 1.3, 0, 1, 0, VENTANA_ALTO, renderer);
-                dibujar_texto("SCORE", VENTANA_ANCHO / 2 - 40, VENTANA_ALTO - 30, 2, 0, 1, 1, VENTANA_ALTO, renderer);
-                dibujar_texto("FUEL", VENTANA_ANCHO / 2 - 30, VENTANA_ALTO - 50, 2, 0, 1, 1, VENTANA_ALTO, renderer);
+                dibujar_texto("SCORE", VENTANA_ANCHO / 2 - 100, VENTANA_ALTO - 30, 2, 0, 1, 1, VENTANA_ALTO, renderer);
+                dibujar_texto("FUEL", VENTANA_ANCHO / 2 - 100, VENTANA_ALTO - 50, 2, 0, 1, 1, VENTANA_ALTO, renderer);
                 dibujar_texto("NEXT SHIP", VENTANA_ANCHO / 2 - 100, VENTANA_ALTO - 70, 2, 0, 1, 1, VENTANA_ALTO, renderer);   
-                dibujar_texto("HIGH SCORE", VENTANA_ANCHO / 2 - 350, VENTANA_ALTO - 85, 1.3, nuevo_highscore, !nuevo_highscore, 1, VENTANA_ALTO, renderer);
                 dibujar_texto(itoa_(puntos_para_nave, siguiente_nave), VENTANA_ANCHO / 2 + 20, VENTANA_ALTO - 70, 2, 0, 1, 0, VENTANA_ALTO, renderer);
                 dibujar_texto(itoa_(fuel_nav, fuel), VENTANA_ANCHO / 2 + 20, VENTANA_ALTO - 50, 2, 0, 1, 0, VENTANA_ALTO, renderer);
                 dibujar_texto(itoa_(puntos_nav, puntos), VENTANA_ANCHO / 2 + 20, VENTANA_ALTO - 30, 2, 0, 1, 0, VENTANA_ALTO, renderer);

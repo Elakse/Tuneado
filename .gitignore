@@ -1,0 +1,5 @@
+.vs/
+Debug/
+Gravitar-clone-tuneado/Debug/
+*.o
+*.obj

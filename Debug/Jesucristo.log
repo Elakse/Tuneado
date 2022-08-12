@@ -1,6 +1,6 @@
 ﻿  nivel.c
-C:\Users\Alejo\VS\Jesus\Jesucristo\nivel.c(109,38): warning C4047: 'return': 'bool' differs in levels of indirection from 'void *'
-C:\Users\Alejo\VS\Jesus\Jesucristo\nivel.c(116,34): warning C4047: 'return': 'bool' differs in levels of indirection from 'void *'
-C:\Users\Alejo\VS\Jesus\Jesucristo\nivel.c(117,23): warning C4133: '=': incompatible types - from 'estrella_t *' to 'base_t *'
-C:\Users\Alejo\VS\Jesus\Jesucristo\nivel.c(115,1): warning C4133: 'initializing': incompatible types - from 'base_t *' to 'estrella_t *'
-  Jesucristo.vcxproj -> C:\Users\Alejo\VS\Jesus\Jesucristo\Debug\Jesucristo.exe
+C:\Users\Alejo\VS\Gravitar-clone-tuneado\nivel.c(109,38): warning C4047: 'return': 'bool' differs in levels of indirection from 'void *'
+C:\Users\Alejo\VS\Gravitar-clone-tuneado\nivel.c(116,34): warning C4047: 'return': 'bool' differs in levels of indirection from 'void *'
+C:\Users\Alejo\VS\Gravitar-clone-tuneado\nivel.c(117,23): warning C4133: '=': incompatible types - from 'estrella_t *' to 'base_t *'
+C:\Users\Alejo\VS\Gravitar-clone-tuneado\nivel.c(115,1): warning C4133: 'initializing': incompatible types - from 'base_t *' to 'estrella_t *'
+  Jesucristo.vcxproj -> C:\Users\Alejo\VS\Gravitar-clone-tuneado\Debug\Jesucristo.exe

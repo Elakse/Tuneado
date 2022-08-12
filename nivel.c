@@ -374,7 +374,14 @@ size_t nivel_torretas_disparadas(nivel_t* nivel, figura_t* fig_destruccion) {
             bala_t* b = lista_iter_ver_actual(iter_b);
             if (bala_es_de_jugador(b) && torreta_distancia_a_punto(t, bala_get_posx(b), bala_get_posy(b)) < DISTANCIA_COLISION) {
                 torreta_destruida = true;
+                //nivel_explosion_particulas(nivel, torreta_get_posx(t), torreta_get_posy(t), fig_destruccion);
+
+                //figura_t* chispa_f = figura_clonar(fig_destruccion);
+                //polilinea_t** chispa_p =  figura_obtener_polis(chispa_f);
+                //color_t amarillo = color_crear(1, 1, 0); 
+                //polilinea_setear_color(chispa_p[0], amarillo);
                 nivel_explosion_particulas(nivel, bala_get_posx(b), bala_get_posy(b), fig_destruccion);
+
                 torreta_destruir_no_ref(lista_iter_borrar(iter_t));  //Chequea para cada torreta la colision con cada bala
                 bala_destruir_no_ref(lista_iter_borrar(iter_b));
                 disparadas++; //contador
